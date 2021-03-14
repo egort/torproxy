@@ -12,7 +12,6 @@ chmod +x manifest-tool
 API="https://api.github.com/repos/multiarch/qemu-user-static/tags"
 URL="https://github.com/multiarch/qemu-user-static/releases/download"
 TAG=$(curl -Ls $API | awk -F'"' '/name.*v[0-9]/ {print $4; exit}')
-ARCH=$([[ "${DOCKER_TAG}" == "arm32v7" ]] && \
-            echo "${DOCKER_TAG::-2}" || echo "${DOCKER_TAG}")
+ARCH=$([[ "${DOCKER_TAG}" == "arm32v7" ]] && echo "${DOCKER_TAG::-4}" || echo "${DOCKER_TAG}")
 
 curl -LSs "${URL}/${TAG}/x86_64_qemu-${ARCH}-static.tar.gz" | tar xzv
